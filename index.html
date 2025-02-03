@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue intro</title>
+
+    <!-- https://vuejs.org/guide/introduction.html god hjelp her -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        .box {
+            padding: 100px 0;
+            width: 400px;
+            text-align: center;
+            background-color: #ddd;
+            margin: 20px;
+            display: inline-block;
+        }
+        img{
+            height: 150px;
+        }
+        body{
+            background: #eee;
+            max-width: 960px;
+            margin: 20px auto;
+        }
+        p, h3, ul{
+            margin: 0;
+            padding: 0;
+        }
+        li{
+            list-style-type: none;
+            background: #fff;
+            margin: 20px auto;
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        li.fav{
+            background: #ff9ed2;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <p>{{title}} - {{author}} - {{age}}</p>
+        <button v-on:click="age++">Increase age</button>
+        <button v-on:click="age--">Decrease age</button>
+        <div @click="changeTitle('Game of dog')">Change title</div> 
+        <!-- En annen måte å skrive v-on: på er @ -->
+    </div>
+
+
+    <div id="app2">
+        <div v-if="showBooks">
+        <p>{{title}} - {{author}} - {{age}}</p>
+        </div>
+
+        <button @click="toggleShowBooks">
+            <span v-if="showBooks">Hide Books</span>
+            <span v-else>Show Books</span>
+        </button>
+
+<!-- v-show bruker css til å skjule elementet, mens v-if som brukt over fjerner det fra DOM helt
+ show gir bedre ytelse enn å fjerne noe helt fra DOM -->
+        <div v-show="showBooks">currently showing books</div>
+        
+        <!-- mouse events 
+         event blir sendt som parameter automatisk hvis vi ikke skriver noe, ellers må det defineres som under-->
+        
+        <div class="box" @mouseover="handleEvent($event, 5)">mouseover(enter)</div>
+        <div class="box" @mouseleave="handleEvent">mouseleave</div>
+        <div class="box" @dblclick="handleEvent">double click</div>
+        <div class="box" @mousemove="handleMousemove">position - {{x}} {{y}}</div>
+    
+    
+    </div>
+
+    <!-- Lists og output, dynamic classes -->
+    <div id="app3">
+        <div v-if="showBooks">
+            <ul>
+                <!-- dynamisk klasse som baserer seg på isFav atributten i objektet. -->
+                <li v-for ="book in books" :class="{fav: book.isFav}" @click="toggleFav(book)">
+                    <img :src="book.img" :alt="book.title">
+                    <h3>{{ book.title }}</h3>
+                    <p>{{ book.author }}</p>
+                </li>
+            </ul>
+        </div>
+        <!-- Attribute binding -->
+            <a :href="url">The tubes</a>
+            <!-- : er shortcut for v-bind: -->
+    </div>
+
+
+    <script src="app.js"></script>
+</body>
+</html>
