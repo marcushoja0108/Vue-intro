@@ -79,10 +79,10 @@ const app3 = Vue.createApp({
             book.isFav = !book.isFav
         },
     },
-    //computed er metoder som er avhenging av annen data
+    //computed er metoder som er avhenging av annen data, oppdateres etter dataen oppdateres
     computed: { 
         filteredBooks(){
-
+            return this.books.filter((book) => book.isFav)
         }
     }
 })
